@@ -1,0 +1,13 @@
+{
+  "indicatorsFile" : "resources/consentDialog/indicators.json",
+  "descriptors" : {
+    "initialDialog" : "[CDA] initial dialog analysis",
+    "initialTraffic" : "[CDA] initial traffic collection",
+    "accept" : "[CDA] accepting consent",
+    "reject" : "[CDA] rejecting consent"
+  },
+  "keywordScore" : 1,
+  "lengthFactor" : 2,
+  "sizeFactor" : 1.5,
+  "colorDeltaEThreshold" : 3
+}
