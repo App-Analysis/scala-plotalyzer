@@ -1,10 +1,6 @@
-package de.tubs.cs.ias.plotalyzer.utility
+package de.tubs.cs.ias.plotalyzer.utility.output
 
-import me.tongfei.progressbar.{
-  ProgressBar,
-  ProgressBarBuilder,
-  ProgressBarStyle
-}
+import me.tongfei.progressbar.{ProgressBar, ProgressBarBuilder, ProgressBarStyle}
 
 object AsciiProgressBar {
 

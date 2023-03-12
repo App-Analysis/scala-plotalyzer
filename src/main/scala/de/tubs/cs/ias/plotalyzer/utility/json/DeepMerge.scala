@@ -1,6 +1,7 @@
-package de.tubs.cs.ias.plotalyzer.utility
+package de.tubs.cs.ias.plotalyzer.utility.json
 
-import spray.json.{JsArray, JsObject, JsValue, JsNull}
+import spray.json.{JsArray, JsNull, JsObject, JsValue}
+
 import scala.collection.mutable.{Map => MMap}
 
 object DeepMerge {

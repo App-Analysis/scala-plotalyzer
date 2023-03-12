@@ -17,7 +17,7 @@ import de.tubs.cs.ias.plotalyzer.trackerAnalysis.{
   Width
 }
 import de.tubs.cs.ias.plotalyzer.trackerAnalysis.JsonObjectExtension.ExtendedJsObject
-import de.tubs.cs.ias.plotalyzer.utility.DeepMerge
+import de.tubs.cs.ias.plotalyzer.utility.json.DeepMerge
 import spray.json.{JsObject, JsString, JsonParser}
 
 import java.net.URLDecoder

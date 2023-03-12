@@ -9,7 +9,7 @@ import de.tubs.cs.ias.plotalyzer.trackerAnalysis.{
   GlobalOSAdvertisingIdentifier,
   UUID
 }
-import de.tubs.cs.ias.plotalyzer.utility.DeepMerge
+import de.tubs.cs.ias.plotalyzer.utility.json.DeepMerge
 import spray.json.{JsArray, JsObject, JsString, JsonParser}
 
 import java.net.URLDecoder

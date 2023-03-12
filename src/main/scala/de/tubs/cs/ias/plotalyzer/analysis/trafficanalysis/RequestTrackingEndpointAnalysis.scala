@@ -6,7 +6,7 @@ import de.tubs.cs.ias.plotalyzer.database.entities.{
   InterfaceAnalysis,
   MobileApp
 }
-import de.tubs.cs.ias.plotalyzer.utility.AsciiProgressBar
+import de.tubs.cs.ias.plotalyzer.utility.output.AsciiProgressBar
 import spray.json.{JsArray, JsNull, JsNumber, JsObject, JsString, JsValue}
 import wvlet.log.LogSupport
 

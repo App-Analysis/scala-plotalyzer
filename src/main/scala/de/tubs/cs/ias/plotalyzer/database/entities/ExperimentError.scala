@@ -1,7 +1,7 @@
 package de.tubs.cs.ias.plotalyzer.database.entities
 
 import de.tubs.cs.ias.plotalyzer.database.Database
-import de.tubs.cs.ias.plotalyzer.utility.{StackTrace, Time}
+import de.tubs.cs.ias.plotalyzer.utility.output.{StackTrace, Time}
 import scalikejdbc.{WrappedResultSet, scalikejdbcSQLInterpolationImplicitDef}
 import spray.json.{JsNumber, JsObject, JsString, JsValue}
 import java.time.ZonedDateTime

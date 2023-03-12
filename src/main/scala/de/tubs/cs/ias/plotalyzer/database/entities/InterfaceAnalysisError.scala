@@ -1,7 +1,7 @@
 package de.tubs.cs.ias.plotalyzer.database.entities
 
 import de.tubs.cs.ias.plotalyzer.database.Database
-import de.tubs.cs.ias.plotalyzer.utility.StackTrace
+import de.tubs.cs.ias.plotalyzer.utility.output.StackTrace
 import scalikejdbc.{WrappedResultSet, scalikejdbcSQLInterpolationImplicitDef}
 import spray.json.{JsNull, JsNumber, JsObject, JsString, JsValue}
 

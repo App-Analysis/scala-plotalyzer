@@ -12,7 +12,7 @@ import de.tubs.cs.ias.plotalyzer.trackerAnalysis.{
   OS
 }
 import de.tubs.cs.ias.plotalyzer.trackerAnalysis.JsonObjectExtension.ExtendedJsObject
-import de.tubs.cs.ias.plotalyzer.utility.DeepMerge
+import de.tubs.cs.ias.plotalyzer.utility.json.DeepMerge
 import spray.json.{JsArray, JsNumber, JsObject, JsString, JsValue}
 
 import scala.collection.mutable.{ListBuffer, Map => MMap}

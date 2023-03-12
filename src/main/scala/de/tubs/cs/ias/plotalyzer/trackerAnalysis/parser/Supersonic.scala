@@ -4,7 +4,7 @@ import de.tubs.cs.ias.plotalyzer.database.entities.trafficcollection.Request
 import de.tubs.cs.ias.plotalyzer.trackerAnalysis.Encoding.PLAIN
 import de.tubs.cs.ias.plotalyzer.trackerAnalysis.JsonObjectExtension.ExtendedJsObject
 import de.tubs.cs.ias.plotalyzer.trackerAnalysis._
-import de.tubs.cs.ias.plotalyzer.utility.DeepMerge
+import de.tubs.cs.ias.plotalyzer.utility.json.DeepMerge
 import spray.json.{JsObject, JsString, JsonParser}
 
 import java.io.ByteArrayInputStream

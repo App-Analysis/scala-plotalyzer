@@ -1,4 +1,4 @@
-package de.tubs.cs.ias.plotalyzer.utility
+package de.tubs.cs.ias.plotalyzer.utility.output
 
 import spray.json.{JsObject, JsString, JsValue}
 
