@@ -16,7 +16,8 @@ libraryDependencies ++= Seq(
   "org.postgresql"         % "postgresql"               % "42.2.18",
   "com.thesamet.scalapb"   %% "scalapb-json4s"          % "0.12.0",
   "com.thesamet.scalapb"   %% "compilerplugin"          % "0.11.12",
-  "org.json4s"             %% "json4s-native"           % "4.0.6"
+  "org.json4s"             %% "json4s-native"           % "4.0.6",
+  "org.clapper"            %% "classutil"               % "1.5.0",
 )
 
 ThisBuild / resolvers ++= Seq(
