@@ -1,8 +1,17 @@
 package de.tubs.cs.ias.plotalyzer.plugins
 
-import spray.json.JsValue
-
+/** Trait that has to be implemented to become a plugin for the plotalyzer
+  *
+  */
 trait AnalysisPlugin {
-  def analyze(context: AnalysisContext): Either[Exception, JsValue]
+
+  /** this method starts the analysis provided with the AnlysisContext
+    *
+    * no rerun is expected, i.e., the analysis can store state and will not be repeated
+    *
+    * @param context the analysis context the analysis runs in
+    * @return the Analysis return in case of success or an exception
+    */
+  def analyze(context: AnalysisContext): Either[Exception, AnalysisReturn]
 
 }
