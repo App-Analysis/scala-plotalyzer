@@ -1,0 +1,11 @@
+{
+  "plugin" : {
+    "folder" : "./plugins/",
+    "available" : {
+      "ExperimentSummary": {
+        "owner": "simkoc",
+        "repo": "plotalyzer-plugin-experiment-summary"
+      }
+    }
+  }
+}
