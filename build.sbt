@@ -1,7 +1,7 @@
 name := "plotalyzer"
 ThisBuild / scalaVersion := "2.13.7"
 organization := "de.tubs.cs.ias"
-
+ThisBuild / versionScheme := Some("semver-spec")
 enablePlugins(JavaAppPackaging)
 
 libraryDependencies ++= Seq(
