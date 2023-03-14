@@ -2,18 +2,40 @@ package de.tubs.cs.ias.plotalyzer.database.entities
 
 import de.tubs.cs.ias.plotalyzer.database.Database
 import wvlet.log.LogSupport
-
 import java.io.File
 
+/** trait representing an element in an interaction chain
+  *
+  * @author Simon Koch
+  *
+  */
 sealed trait InterfaceInteractionChainElement {
 
+  /** the interface of the current chain step
+    */
   val interface: Interface
 
+  /** get the last interface in the chain
+    *
+    * @return the last interface in the chain
+    */
   def getLastInterface: Interface
 
+  /** write the screenshots of the current chain step into folder
+    *
+    * @param folder the folder into which to write the screenshots
+    * @return the current folder name of the chain step
+    */
   def dumpScreenshots(folder: String): Option[String]
 
 }
+
+/** the last element in an interface interaction chain
+  *
+  * @author Simon Koch
+  *
+  * @param interface the interface belonging to this step
+  */
 sealed case class ChainEnd(override val interface: Interface)
     extends InterfaceInteractionChainElement {
 
@@ -26,6 +48,13 @@ sealed case class ChainEnd(override val interface: Interface)
 
 }
 
+/** an interaction step that unexpectedly stops an interaction
+  *
+  * @author Simon Koch
+  *
+  * @param interface the interface belonging to this step
+  * @param action the action performed in this step
+  */
 sealed case class StoppingInteraction(override val interface: Interface,
                                       action: InterfaceElementInteraction)
     extends InterfaceInteractionChainElement {
@@ -41,6 +70,14 @@ sealed case class StoppingInteraction(override val interface: Interface,
 
 }
 
+/** an interaction step that leads to a new interface
+  *
+  * @author Simon Koch
+  *
+  * @param interface the interface belonging to this step
+  * @param action the action performed in this step
+  * @param leadingTo the next chain element following this action
+  */
 sealed case class NonStoppingInteraction(
     override val interface: Interface,
     action: InterfaceElementInteraction,
@@ -58,6 +95,14 @@ sealed case class NonStoppingInteraction(
 
 }
 
+/** class representing the overall interface interaction chain
+  *
+  * @author Simon Koch
+  * todo: this could be made a case class as it is not mutable
+  *
+  * @param start the list of interfaces to form the chain from
+  * @param database the database connection
+  */
 class InterfaceInteractionChain(start: List[Interface])(
     implicit database: Database)
     extends LogSupport {
@@ -85,6 +130,8 @@ class InterfaceInteractionChain(start: List[Interface])(
     }
   }
 
+  /** the chain formed out of the provided interfaces
+    */
   val chain: Option[InterfaceInteractionChainElement] = {
     val interfaceMap: Map[Int, Interface] =
       start.groupBy(_.getId).map(elem => elem._1 -> elem._2.head)
@@ -117,8 +164,19 @@ class InterfaceInteractionChain(start: List[Interface])(
 
 }
 
+/** companion object
+  *
+  * @author Simon Koch
+  *
+  */
 object InterfaceInteractionChain {
 
+  /** create an interface interaction chain of a given analysis
+    *
+    * @param analysis the analysis to extract the interaction chain from
+    * @param database the database connection
+    * @return the interface interaction chain
+    */
   def get(analysis: InterfaceAnalysis)(
       implicit database: Database): InterfaceInteractionChain = {
     new InterfaceInteractionChain(Interface.getAll(analysis))

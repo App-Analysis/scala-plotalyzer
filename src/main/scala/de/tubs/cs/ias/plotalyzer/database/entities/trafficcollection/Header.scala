@@ -3,10 +3,28 @@ package de.tubs.cs.ias.plotalyzer.database.entities.trafficcollection
 import de.tubs.cs.ias.plotalyzer.database.Database
 import scalikejdbc.scalikejdbcSQLInterpolationImplicitDef
 
+/** an intercepted header of a request
+  *
+  * @author Simon Koch
+  *
+  * @param name the name of the header
+  * @param values the value of the header
+  */
 case class Header(name: String, values: String)
 
+/** companion object
+  *
+  * @author Simon Koch
+  *
+  */
 object Header {
 
+  /** get all headers belonging to requests
+    *
+    * @param requests the list of request ids
+    * @param database the database connection
+    * @return a mapping of request id to list of headers
+    */
   def get(requests: List[Int])(
       implicit database: Database): Map[Int, List[Header]] = {
     database.withDatabaseSession { implicit session =>

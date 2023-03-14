@@ -5,6 +5,16 @@ import de.tubs.cs.ias.plotalyzer.utility.output.StackTrace
 import scalikejdbc.{WrappedResultSet, scalikejdbcSQLInterpolationImplicitDef}
 import spray.json.{JsNull, JsNumber, JsObject, JsString, JsValue}
 
+/** an error that occurred during an interface analysis
+  *
+  * @author Simon Koch
+  *
+  * @param id the id of the error
+  * @param analysis the corresponding analysis id
+  * @param interface the interface the error occurred at
+  * @param message the message of the error
+  * @param stacktrace the corresponding stacktrace
+  */
 class InterfaceAnalysisError(id: Int,
                              analysis: Int,
                              interface: Option[Int],
@@ -17,6 +27,10 @@ class InterfaceAnalysisError(id: Int,
   def getMessage: String = message
   def getStacktrace: StackTrace = StackTrace(stacktrace)
 
+  /** convert the error to a JsObject
+    *
+    * @return the JsObject
+    */
   def toJson: JsValue = {
     JsObject(
       "id" -> JsNumber(getId),
@@ -35,8 +49,20 @@ class InterfaceAnalysisError(id: Int,
 
 }
 
+/** the companion object
+  *
+  * @author Simon Koch
+  *
+  */
 object InterfaceAnalysisError {
 
+  /** extract an interface analysis error from an entity
+    *
+    * expects the columns id,analysis,interface,message,stacktrace
+    *
+    * @param entity the entity to convert
+    * @return the extracted interface analysis error
+    */
   def apply(entity: WrappedResultSet): InterfaceAnalysisError = {
     new InterfaceAnalysisError(
       entity.int("id"),
@@ -47,6 +73,12 @@ object InterfaceAnalysisError {
     )
   }
 
+  /** get errors related to the provided analysis ids
+    *
+    * @param analysis a list of analysis ids
+    * @param database the database connection
+    * @return a list of all errors
+    */
   def getInterfaceAnalysisErrors(analysis: List[Int])(
       implicit database: Database): List[InterfaceAnalysisError] = {
     database.withDatabaseSession { implicit session =>
@@ -61,6 +93,12 @@ object InterfaceAnalysisError {
     }
   }
 
+  /** get a specific analysis error
+    *
+    * @param id the id of the error
+    * @param database the database connection
+    * @return the interface analysis error
+    */
   def getInterfaceAnalysisError(id: Int)(
       implicit database: Database): InterfaceAnalysisError = {
     database.withDatabaseSession { implicit session =>

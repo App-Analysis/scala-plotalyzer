@@ -5,6 +5,19 @@ import scalikejdbc.scalikejdbcSQLInterpolationImplicitDef
 
 import java.time.ZonedDateTime
 
+/** a traffic collection
+  *
+  * @author Simon Koch
+  * todo: could be a case class as it is not mutable
+  *
+  * @param id the id of the traffic collection
+  * @param analysis the id of the corresponding analysis
+  * @param interface the id of the corresponding interface
+  * @param start the start of the traffic collection
+  * @param end the end of the traffic collection
+  * @param comment the comment stored for the traffic collection
+  * @param requests the requests of the traffic collection
+  */
 class TrafficCollection(id: Int,
                         analysis: Int,
                         interface: Option[Int],
@@ -23,8 +36,22 @@ class TrafficCollection(id: Int,
 
 }
 
+/** companion object
+  *
+  * @author Simon Koch
+  *
+  */
 object TrafficCollection {
 
+  /** a prototype of a traffic collection lacking the actual requests
+    *
+    * @param id the id of the traffic collection
+    * @param analysis the id of the analysis
+    * @param interface the id of the interface
+    * @param start the start of the traffic collection
+    * @param end the end of the traffic collection
+    * @param comment the stored comment of the traffic collection
+    */
   private case class TrafficCollectionPrototype(id: Int,
                                                 analysis: Int,
                                                 interface: Option[Int],

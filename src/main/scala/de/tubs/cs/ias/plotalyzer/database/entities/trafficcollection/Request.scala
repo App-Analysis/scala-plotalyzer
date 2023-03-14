@@ -2,9 +2,28 @@ package de.tubs.cs.ias.plotalyzer.database.entities.trafficcollection
 
 import de.tubs.cs.ias.plotalyzer.database.Database
 import scalikejdbc.{WrappedResultSet, scalikejdbcSQLInterpolationImplicitDef}
-
 import java.time.ZonedDateTime
 
+/** a request intercepted during traffic collection
+  *
+  * @author Simon Koch
+  *
+  * @param id the id of the request
+  * @param run the traffic collection run id
+  * @param start the start of the request
+  * @param scheme the scheme of the request
+  * @param method the method of the request
+  * @param host the host of the request
+  * @param port the port of the request
+  * @param path the path of the request
+  * @param content the content of the request (string)
+  * @param contentRaw the raw content of the request (bytes)
+  * @param authority the authority of the request
+  * @param error any errors encountered while intercepting the request
+  * @param cookies cookies transmitted with the request
+  * @param headers headers transmitted with the request
+  * @param trailers trailers transmitted with the request
+  */
 case class Request(id: Int,
                    run: Int,
                    start: ZonedDateTime,
@@ -42,8 +61,30 @@ case class Request(id: Int,
 
 }
 
+/** companion object
+  *
+  * @author Simon Koch
+  *
+  */
 object Request {
 
+  /** a request fragment not yet containing cookies, headers, or trailers
+    *
+    * @author Simon Koch
+    *
+    * @param id the id of the request
+    * @param run the run id of the traffic collection
+    * @param start the start of the request
+    * @param scheme the scheme of the request
+    * @param method the method of the request
+    * @param host the host of the request
+    * @param port the port of the request
+    * @param path the path of the request
+    * @param content the content of the request (string)
+    * @param contentRaw the content of the request raw (bytes)
+    * @param authority the authority of the request
+    * @param error the encountered errors while intercepting the request
+    */
   private case class Fragment(id: Int,
                               run: Int,
                               start: ZonedDateTime,
@@ -57,7 +98,20 @@ object Request {
                               authority: String,
                               error: Option[String])
 
+  /** companion object
+    *
+    * @author Simon Koch
+    *
+    */
   private object Fragment {
+
+    /** convert an request fragment entity to an object
+      *
+      * expects the columns id, run, start_time, scheme, method, host, port, path, content, content_Raw, authority, error
+      *
+      * @param entity the entity of interest
+      * @return the corresponding object
+      */
     def apply(entity: WrappedResultSet): Fragment = {
       Fragment(
         entity.int("id"),
@@ -77,6 +131,14 @@ object Request {
 
   }
 
+  /** uses a fragment, list of cookies, list of headers, list of trailers, to create a proper request object
+    *
+    * @param fragment the fragment of the request
+    * @param cookies the corresponding list of cookies
+    * @param headers the corresponding list of headers
+    * @param trailers the corresponding list of trailers
+    * @return
+    */
   private def apply(fragment: Fragment,
                     cookies: List[Cookie],
                     headers: List[Header],
@@ -100,6 +162,14 @@ object Request {
     )
   }
 
+  /** get a request table for a set of request collection runs
+    *
+    * this is basically an in-memory fast accessible copy of the subset of the request table for faster interaction
+    *
+    * @param runs the runs of interest
+    * @param database the database connection
+    * @return a map mapping collection runs with list of requests
+    */
   def getRequestTable(runs: List[Int])(
       implicit database: Database): Map[Int, List[Request]] = {
     val fragments: Map[Int, List[Fragment]] = database.withDatabaseSession {

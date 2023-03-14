@@ -3,9 +3,28 @@ package de.tubs.cs.ias.plotalyzer.database.entities.trafficcollection
 import de.tubs.cs.ias.plotalyzer.database.Database
 import scalikejdbc.scalikejdbcSQLInterpolationImplicitDef
 
+/** a trailer of a request
+  *
+  * @author Simon Koch
+  *
+  * @param name the name of the trailer
+  * @param values the value(s) of the trailer
+  */
 case class Trailer(name: String, values: String)
 
+/** companion object
+  *
+  * @author Simon Koch
+  *
+  */
 object Trailer {
+
+  /** get all trailers for requests
+    *
+    * @param requests the list of requests
+    * @param database the database connection
+    * @return the list of trailers
+    */
   def get(requests: List[Int])(
       implicit database: Database): Map[Int, List[Trailer]] = {
     database.withDatabaseSession { implicit session =>

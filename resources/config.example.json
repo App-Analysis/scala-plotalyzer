@@ -1,0 +1,8 @@
+{
+  "plugin_management" : {
+    "plugin_folder" : "./plugins/",
+    "known_plugins" : {
+      "name" : "jar_download_url"
+    }
+  }
+}
