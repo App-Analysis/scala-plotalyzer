@@ -19,7 +19,6 @@ case class DatabaseConf(host: String,
                         pwd: String,
                         database: String)
 
-
 /** companion object for the database configuration to read in the config from a json
   *
   * @author Simon Koch
