@@ -1,8 +1,11 @@
 {
-  "plugin_management" : {
-    "plugin_folder" : "./plugins/",
-    "known_plugins" : {
-      "name" : "jar_download_url"
+  "plugin" : {
+    "folder" : "./plugins/",
+    "available" : {
+      "ExperimentSummary": {
+        "owner": "simkoc",
+        "repo": "plotalyzer-plugin-experiment-summary"
+      }
     }
   }
 }
