@@ -37,11 +37,11 @@ object Plotalyzer extends LogSupport {
                  "the configuration file")
     .addSubparser(PluginManager.parser)
     .addSubparser(
-      Parser("analyze", "perform an analysis")
+      Parser("analysis", "perform an analysis")
         .addOptional("database-conf",
                      "d",
                      "database-conf",
-                     Some("./resources/db.conf"),
+                     Some("./resources/db.json"),
                      "a json containing the database conf")
         .addPositional("id", "the id of the experiment to analyze")
         .addPositional("out", "the path to print the result into")

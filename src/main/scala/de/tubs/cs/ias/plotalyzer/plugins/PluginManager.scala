@@ -190,6 +190,7 @@ object PluginManager extends LogSupport {
       .elements
       .map(elem => RemoteGithubRelease(elem.asJsObject))
       .sorted
+      .reverse
     plugins.toList
   }
 
@@ -202,7 +203,10 @@ object PluginManager extends LogSupport {
                                conf: Configuration): Unit = {
     val client = HttpClient.newHttpClient()
     println("Available Plugins:")
-    val filter = pargs.getValue[String]("filter").r.unanchored
+    val filter = pargs.get[OptionalValue[String]]("filter").value match {
+      case Some(value) => value.r.unanchored //either restrict to the filter
+      case None        => ".*".r.unanchored // or if no filter list everything
+    }
     conf.plugin.available.filter(plugin => filter.matches(plugin._1)).foreach {
       case (name, remote) =>
         val versions = getReleases(client, remote)
