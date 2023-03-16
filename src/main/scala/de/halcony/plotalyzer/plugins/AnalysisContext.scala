@@ -23,7 +23,7 @@ trait AnalysisContext {
 
   /** the active database connection
     */
-  val database : Database
+  val database: Database
 
   /** the plugin manager itself, in case there are cross dependencies between plugins
     */
@@ -39,6 +39,5 @@ trait AnalysisContext {
 case class BasicContext(override val experiment: Experiment,
                         override val only: Option[Seq[String]],
                         override val args: String,
-                        override val database : Database
-                        )
+                        override val database: Database)
     extends AnalysisContext
