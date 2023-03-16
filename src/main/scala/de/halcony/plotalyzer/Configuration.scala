@@ -1,6 +1,9 @@
 package de.halcony.plotalyzer
 
-import de.halcony.plotalyzer.plugins.{PluginManagerConfiguration, RemotePluginConfig}
+import de.halcony.plotalyzer.plugins.{
+  PluginManagerConfiguration,
+  RemotePluginConfig
+}
 import spray.json.{DefaultJsonProtocol, JsonParser, RootJsonFormat}
 
 import scala.io.Source

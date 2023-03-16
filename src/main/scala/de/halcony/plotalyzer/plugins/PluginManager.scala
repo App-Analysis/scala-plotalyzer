@@ -26,7 +26,7 @@ class PluginManager(conf: PluginManagerConfiguration) extends LogSupport {
   /** the fully qualified name of the AnalysisPlugin trait
     */
   private val PLUGIN_INTERFACE =
-    "de.tubs.cs.ias.plotalyzer.plugins.AnalysisPlugin"
+    "de.halcony.plotalyzer.plugins.AnalysisPlugin"
 
   /** the jars contained in the PLUGIN_DIRECTORY folder on startup
     */

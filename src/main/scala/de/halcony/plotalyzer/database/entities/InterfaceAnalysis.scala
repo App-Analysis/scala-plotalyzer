@@ -1,7 +1,10 @@
 package de.halcony.plotalyzer.database.entities
 
 import de.halcony.plotalyzer.database.Database
-import de.halcony.plotalyzer.database.entities.trafficcollection.{TrafficCollection, TrafficCollectionCache}
+import de.halcony.plotalyzer.database.entities.trafficcollection.{
+  TrafficCollection,
+  TrafficCollectionCache
+}
 import scalikejdbc.{WrappedResultSet, scalikejdbcSQLInterpolationImplicitDef}
 import spray.json.JsValue
 import wvlet.log.LogSupport
