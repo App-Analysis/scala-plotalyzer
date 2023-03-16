@@ -10,10 +10,13 @@ Each plugin provides its own unique capability of analyzing the collected data a
 
 ## Writing your own plugin
 
-To write your own plugin you need to depend on this repository. Eventually available via
+To write your own plugin you need to depend on this repository. It is publicly available
 
 ```
-"de.halcony" %% "plotalyzer" %% "X.Y.Z" 
+ThisBuild / resolvers ++= Seq(
+  "Sonatype OSS Snapshots" at "https://s01.oss.sonatype.org/content/repositories/public",
+)
+libraryDependencies ++= Seq("de.halcony" %% "plotalyzer" %% "1.0.0") 
 ```
 
 you then need to implement the `AnalysisPlugin` interface. Move the packaged jar of your project into the plugin folder
