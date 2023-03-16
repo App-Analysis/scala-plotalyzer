@@ -1,9 +1,19 @@
 package de.halcony.plotalyzer
 
-import de.halcony.argparse.{OptionalValue, Parser, ParsingException, ParsingResult}
+import de.halcony.argparse.{
+  OptionalValue,
+  Parser,
+  ParsingException,
+  ParsingResult
+}
 import de.halcony.plotalyzer.database.{Database, DatabaseConf}
 import de.halcony.plotalyzer.database.entities.Experiment
-import de.halcony.plotalyzer.plugins.{AnalysisReturn, BasicContext, JSONReturn, PluginManager}
+import de.halcony.plotalyzer.plugins.{
+  AnalysisReturn,
+  BasicContext,
+  JSONReturn,
+  PluginManager
+}
 import spray.json.{JsObject, JsString}
 import wvlet.log.LogSupport
 
