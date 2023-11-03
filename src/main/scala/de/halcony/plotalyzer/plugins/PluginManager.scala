@@ -5,12 +5,13 @@ import de.halcony.plotalyzer.{Configuration, Plotalyzer}
 import org.clapper.classutil.{ClassFinder, ClassInfo}
 import spray.json.{JsArray, JsonParser}
 import wvlet.log.LogSupport
-
 import java.io.{File, FileOutputStream}
 import java.net.http.HttpResponse.BodyHandlers
 import java.net.http.{HttpClient, HttpRequest}
 import java.net.{URI, URL, URLClassLoader}
+import java.util.jar.{JarEntry, JarFile}
 import scala.annotation.{nowarn, tailrec}
+import scala.jdk.CollectionConverters.EnumerationHasAsScala
 
 /** The PluginManager responsible for finding and loading available plugins
   *
@@ -75,6 +76,14 @@ class PluginManager(conf: PluginManagerConfiguration) extends LogSupport {
       Plotalyzer.getClass.getClassLoader
     val childClassLoader =
       URLClassLoader.newInstance(urls.toArray, parentClassLoader)
+    val jarFile : JarFile = new JarFile(classInfo._2.getPath)
+    jarFile.entries().asScala.foreach {
+      je =>
+        if(!je.isDirectory && je.getName.endsWith(".class")) {
+          val className : String = je.getName.substring(0,je.getName.length - 6).replace("/",".")
+          childClassLoader.loadClass(className)
+        }
+    }
     try {
       Some(
         Class
