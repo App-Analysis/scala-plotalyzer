@@ -76,13 +76,13 @@ class PluginManager(conf: PluginManagerConfiguration) extends LogSupport {
       Plotalyzer.getClass.getClassLoader
     val childClassLoader =
       URLClassLoader.newInstance(urls.toArray, parentClassLoader)
-    val jarFile : JarFile = new JarFile(classInfo._2.getPath)
-    jarFile.entries().asScala.foreach {
-      je =>
-        if(!je.isDirectory && je.getName.endsWith(".class")) {
-          val className : String = je.getName.substring(0,je.getName.length - 6).replace("/",".")
-          childClassLoader.loadClass(className)
-        }
+    val jarFile: JarFile = new JarFile(classInfo._2.getPath)
+    jarFile.entries().asScala.foreach { je =>
+      if (!je.isDirectory && je.getName.endsWith(".class")) {
+        val className: String =
+          je.getName.substring(0, je.getName.length - 6).replace("/", ".")
+        childClassLoader.loadClass(className)
+      }
     }
     try {
       Some(
