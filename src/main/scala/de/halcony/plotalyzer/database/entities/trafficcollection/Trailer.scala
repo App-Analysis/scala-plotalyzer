@@ -1,6 +1,11 @@
 package de.halcony.plotalyzer.database.entities.trafficcollection
 
 import de.halcony.plotalyzer.database.Database
+import de.halcony.plotalyzer.database.entities.trafficcollection.TrafficDirection.{
+  TrafficDirection,
+  REQUEST,
+  RESPONSE
+}
 import scalikejdbc.scalikejdbcSQLInterpolationImplicitDef
 
 /** a trailer of a request
@@ -21,20 +26,26 @@ object Trailer {
 
   /** get all trailers for requests
     *
-    * @param requests the list of requests
+    * @param id the list of requests/responses
     * @param database the database connection
     * @return the list of trailers
     */
-  def get(requests: List[Int])(
+  def get(id: List[Int], direction: TrafficDirection)(
       implicit database: Database): Map[Int, List[Trailer]] = {
     database.withDatabaseSession { implicit session =>
-      requests
-        .grouped(10000)
+      id.grouped(10000)
         .flatMap { requests =>
-          sql"""SELECT request, name, values FROM Trailer WHERE request IN ($requests)"""
+          val query = direction match {
+            case REQUEST =>
+              sql"""SELECT request, name, values FROM Trailer WHERE request IN ($requests)"""
+            case RESPONSE =>
+              sql"""SELECT response, name, values FROM ResponseTrailer WHERE response IN ($requests)"""
+          }
+          query
             .map { entity =>
-              entity.int("request") -> Trailer(entity.string("name"),
-                                               entity.string("value"))
+              entity.int(if (direction == REQUEST) "request" else "response") -> Trailer(
+                entity.string("name"),
+                entity.string("value"))
             }
             .toList
             .apply()
