@@ -99,9 +99,9 @@ object Response {
       case (requestID, fragments) =>
         requestID -> fragments.map { frag =>
           Response(frag,
-                   cookies.getOrElse(frag.request, List()),
-                   headers.getOrElse(frag.request, List()),
-                   trailers.getOrElse(frag.request, List()))
+                   cookies.getOrElse(frag.id, List()),
+                   headers.getOrElse(frag.id, List()),
+                   trailers.getOrElse(frag.id, List()))
         }
     }
   }
