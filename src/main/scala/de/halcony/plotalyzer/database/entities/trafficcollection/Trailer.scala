@@ -45,7 +45,7 @@ object Trailer {
             .map { entity =>
               entity.int(if (direction == REQUEST) "request" else "response") -> Trailer(
                 entity.string("name"),
-                entity.string("value"))
+                entity.string("values"))
             }
             .toList
             .apply()
