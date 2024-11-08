@@ -173,6 +173,7 @@ object Request {
   /** get a request table for a set of request collection runs
     *
     * this is basically an in-memory fast accessible copy of the subset of the request table for faster interaction
+    * which highly improves access and processing times
     *
     * @param runs the runs of interest
     * @param database the database connection
