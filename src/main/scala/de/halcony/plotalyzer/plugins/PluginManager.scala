@@ -9,7 +9,7 @@ import java.io.{File, FileOutputStream}
 import java.net.http.HttpResponse.BodyHandlers
 import java.net.http.{HttpClient, HttpRequest}
 import java.net.{URI, URL, URLClassLoader}
-import java.util.jar.{JarEntry, JarFile}
+import java.util.jar.JarFile
 import scala.annotation.{nowarn, tailrec}
 import scala.jdk.CollectionConverters.EnumerationHasAsScala
 

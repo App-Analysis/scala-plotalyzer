@@ -29,7 +29,7 @@ import java.time.ZonedDateTime
   * @param headers headers transmitted with the request
   * @param trailers trailers transmitted with the request
   */
-case class Request(id: Int,
+case class Request(id: String,
                    run: Int,
                    start: ZonedDateTime,
                    scheme: String,
@@ -91,7 +91,7 @@ object Request {
     * @param authority the authority of the request
     * @param error the encountered errors while intercepting the request
     */
-  private case class Fragment(id: Int,
+  private case class Fragment(id: String,
                               run: Int,
                               start: ZonedDateTime,
                               scheme: String,
@@ -120,7 +120,7 @@ object Request {
       */
     def apply(entity: WrappedResultSet): Fragment = {
       Fragment(
-        entity.int("id"),
+        entity.string("id"),
         entity.int("run"),
         entity.zonedDateTime("start_time"),
         entity.string("scheme"),
@@ -195,13 +195,13 @@ object Request {
           .groupBy(_.run)
     }
     val requestIds = fragments.flatMap(_._2.map(_.id)).toList
-    val cookies: Map[Int, List[Cookie]] =
+    val cookies: Map[String, List[Cookie]] =
       Cookie.get(requestIds, TrafficDirection.REQUEST)
-    val headers: Map[Int, List[Header]] =
+    val headers: Map[String, List[Header]] =
       Header.get(requestIds, TrafficDirection.REQUEST)
-    val trailers: Map[Int, List[Trailer]] =
+    val trailers: Map[String, List[Trailer]] =
       Trailer.get(requestIds, TrafficDirection.REQUEST)
-    val responses: Map[Int, List[Response]] =
+    val responses: Map[String, List[Response]] =
       Response.getResponseTable(requestIds)
     fragments.map {
       case (run, fragments) =>

@@ -5,7 +5,7 @@ import scalikejdbc.{WrappedResultSet, scalikejdbcSQLInterpolationImplicitDef}
 
 import java.time.ZonedDateTime
 
-case class Response(id: Int,
+case class Response(id: String,
                     startTime: ZonedDateTime,
                     httpVersion: String,
                     statusCode: Int,
@@ -19,9 +19,9 @@ case class Response(id: Int,
 
 object Response {
 
-  private case class Fragment(id: Int,
+  private case class Fragment(id: String,
                               run: Int,
-                              request: Int,
+                              request: String,
                               startTime: ZonedDateTime,
                               httpVersion: String,
                               statusCode: Int,
@@ -34,9 +34,9 @@ object Response {
 
     def apply(entity: WrappedResultSet): Fragment = {
       Fragment(
-        entity.int("id"),
+        entity.string("id"),
         entity.int("run"),
-        entity.int("request"),
+        entity.string("request"),
         entity.zonedDateTime("start_time"),
         entity.string("http_version"),
         entity.int("status_code"),
@@ -68,10 +68,10 @@ object Response {
     )
   }
 
-  def getResponseTable(requests: List[Int])(
+  def getResponseTable(requests: List[String])(
       implicit database: Database
-  ): Map[Int, List[Response]] = {
-    val fragments: Map[Int, List[Fragment]] = database.withDatabaseSession {
+  ): Map[String, List[Response]] = {
+    val fragments: Map[String, List[Fragment]] = database.withDatabaseSession {
       implicit session =>
         requests
           .grouped(10000)
@@ -89,11 +89,11 @@ object Response {
           .toMap
     }
     val responseIds = fragments.flatMap(_._2.map(_.id)).toList
-    val cookies: Map[Int, List[Cookie]] =
+    val cookies: Map[String, List[Cookie]] =
       Cookie.get(responseIds, TrafficDirection.RESPONSE)
-    val headers: Map[Int, List[Header]] =
+    val headers: Map[String, List[Header]] =
       Header.get(responseIds, TrafficDirection.RESPONSE)
-    val trailers: Map[Int, List[Trailer]] =
+    val trailers: Map[String, List[Trailer]] =
       Trailer.get(responseIds, TrafficDirection.RESPONSE)
     fragments.map {
       case (requestID, fragments) =>

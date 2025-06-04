@@ -30,8 +30,8 @@ object Header {
     * @param database the database connection
     * @return a mapping of request id to list of headers
     */
-  def get(ids: List[Int], direction: TrafficDirection)(
-      implicit database: Database): Map[Int, List[Header]] = {
+  def get(ids: List[String], direction: TrafficDirection)(
+      implicit database: Database): Map[String, List[Header]] = {
     database.withDatabaseSession { implicit session =>
       ids
         .grouped(10000)
@@ -44,7 +44,7 @@ object Header {
           }
           query
             .map { entity =>
-              entity.int(if (direction == REQUEST) "request" else "response") -> Header(
+              entity.string(if (direction == REQUEST) "request" else "response") -> Header(
                 entity.string("name"),
                 entity.string("values"))
             }

@@ -28,8 +28,8 @@ object Cookie {
     * @param database the database connection
     * @return a mapping of request id to cookie list
     */
-  def get(ids: List[Int], direction: TrafficDirection)(
-      implicit database: Database): Map[Int, List[Cookie]] = {
+  def get(ids: List[String], direction: TrafficDirection)(
+      implicit database: Database): Map[String, List[Cookie]] = {
     database.withDatabaseSession { implicit session =>
       ids
         .grouped(10000)
@@ -42,7 +42,7 @@ object Cookie {
           }
           query
             .map { entity =>
-              entity.int(if (direction == REQUEST) "request" else "response") -> Cookie(
+              entity.string(if (direction == REQUEST) "request" else "response") -> Cookie(
                 entity.string("name"),
                 entity.string("values"))
             }

@@ -30,8 +30,8 @@ object Trailer {
     * @param database the database connection
     * @return the list of trailers
     */
-  def get(id: List[Int], direction: TrafficDirection)(
-      implicit database: Database): Map[Int, List[Trailer]] = {
+  def get(id: List[String], direction: TrafficDirection)(
+      implicit database: Database): Map[String, List[Trailer]] = {
     database.withDatabaseSession { implicit session =>
       id.grouped(10000)
         .flatMap { requests =>
@@ -43,7 +43,7 @@ object Trailer {
           }
           query
             .map { entity =>
-              entity.int(if (direction == REQUEST) "request" else "response") -> Trailer(
+              entity.string(if (direction == REQUEST) "request" else "response") -> Trailer(
                 entity.string("name"),
                 entity.string("values"))
             }
