@@ -59,14 +59,40 @@ object TrafficCollection {
                                                 end: ZonedDateTime,
                                                 comment: String)
 
-  def getTrafficCollections(experiment: Int)(
-      implicit database: Database): List[TrafficCollection] = {
+  /** get the next chunk of apps for the cache starting from offset
+   * 
+   * @param experiment the experiment id
+   * @param chunks the number of analysis to load (-1 means load all)
+   * @param offset the offset after which we want to get the analysis
+   * @return the app analysis ids we want to load in the cache
+   */                                              
+  def getChunkAnalysisIds(experiment: Int, chunks: Int, offset: Int)(
+    implicit database: Database): List[Int] = {
     database.withDatabaseSession { implicit session =>
-      val analysis =
+      if (chunks == -1) {
         sql"""SELECT id FROM interfaceanalysis WHERE experiment = $experiment"""
           .map(_.int("id"))
           .toList
           .apply()
+      } else {
+        sql"""SELECT id FROM interfaceanalysis WHERE experiment = $experiment 
+              LIMIT $chunks OFFSET $offset"""
+          .map(_.int("id"))
+          .toList
+          .apply()
+      }
+    }
+  }
+  
+  def getTrafficCollections(experiment: Int, chunks: Int, offset: Int = 0)(
+      implicit database: Database): List[TrafficCollection] = {
+    database.withDatabaseSession { implicit session =>
+      val analysis = getChunkAnalysisIds(experiment, chunks, offset)
+
+      if (analysis.length == 0) {
+        return List()
+      }
+
       val collections =
         sql"""SELECT id,
                        analysis,

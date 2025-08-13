@@ -70,24 +70,22 @@ class InterfaceAnalysis(id: Int,
     }
   }
 
-  /** the traffic collection during the interface analysis in order of interactions
-    */
-  private var trafficCollections: Option[List[TrafficCollection]] = None
-
   /** get the traffic collection during app analysis in order of interaction
-    *
-    * @return the list of traffic collections
-    */
-  def getTrafficCollection: List[TrafficCollection] = synchronized {
-    trafficCollections match {
-      case Some(value) => value
-      case None =>
-        trafficCollections = Some(
-          TrafficCollectionCache.getTrafficCollections(this.getExperimentId,
-                                                       this.getId))
-        trafficCollections.get
+      *
+      * @return the list of traffic collections
+      */
+    def getTrafficCollection: List[TrafficCollection] = synchronized {
+      // List inside this function -> Important for garbage collector
+      var trafficCollections: Option[List[TrafficCollection]] = None
+      trafficCollections match {
+        case Some(value) => value
+        case None =>
+          trafficCollections = Some(
+            TrafficCollectionCache.getTrafficCollectionsChunks(this.getExperimentId,
+                                                        this.getId, 500))
+          trafficCollections.get
+      }
     }
-  }
 
   /** teh interface chain associated with the interface analysis
     */

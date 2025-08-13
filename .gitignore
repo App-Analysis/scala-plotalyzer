@@ -5,6 +5,5 @@
 /.idea/*
 *checkpoint.ipynb
 /plugins/*
-/resources/
 !/resources/config.example.json
 !/resources/db.example.json
